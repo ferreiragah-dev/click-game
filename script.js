@@ -98,24 +98,6 @@ async function register(email, password) {
   window.location.href = "game.html";
 }
 
-//cadastro
-
-async function registerUser() {
-  const email = document.getElementById("registerEmail").value;
-  const password = document.getElementById("registerPassword").value;
-
-  const { error } = await supabase.auth.signUp({
-    email,
-    password
-  });
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  window.location.href = "game.html";
-}
 
 
 //Pontos
@@ -185,4 +167,30 @@ async function loadRanking() {
   data.forEach((u, i) => {
     list.innerHTML += `<li>#${i + 1} ${u.email} — ${u.points}</li>`;
   });
+}
+
+//novo cad
+
+async function registerUser() {
+  const email = document.getElementById("registerEmail").value;
+  const password = document.getElementById("registerPassword").value;
+
+  console.log("Signup:", email);
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: window.location.origin
+    }
+  });
+
+  console.log("Resultado:", data, error);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Usuário criado com sucesso");
 }
