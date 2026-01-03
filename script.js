@@ -82,3 +82,107 @@ function addPoint() {
   document.getElementById("userEmail").innerText = email;
   document.getElementById("points").innerText = user.points;
 })();
+
+
+async function register(email, password) {
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  window.location.href = "game.html";
+}
+
+//cadastro
+
+async function registerUser() {
+  const email = document.getElementById("registerEmail").value;
+  const password = document.getElementById("registerPassword").value;
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  window.location.href = "game.html";
+}
+
+
+//Pontos
+
+async function initGame() {
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  loadProfile();
+  startPPS();
+}
+
+
+//Perfil
+
+async function loadProfile() {
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  document.getElementById("points").innerText = data.points;
+}
+
+
+//PPS
+
+let ppsInterval;
+
+function startPPS() {
+  clearInterval(ppsInterval);
+
+  ppsInterval = setInterval(async () => {
+    const { data } = await supabase.auth.getUser();
+
+    await supabase
+      .from("profiles")
+      .update({
+        points: supabase.raw("points + points_per_second"),
+        last_update: new Date()
+      })
+      .eq("id", data.user.id);
+
+    loadProfile();
+  }, 1000);
+}
+
+//Ranking
+
+async function loadRanking() {
+  const { data } = await supabase
+    .from("ranking_global")
+    .select("*")
+    .limit(20);
+
+  const list = document.getElementById("ranking");
+  list.innerHTML = "";
+
+  data.forEach((u, i) => {
+    list.innerHTML += `<li>#${i + 1} ${u.email} — ${u.points}</li>`;
+  });
+}

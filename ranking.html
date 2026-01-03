@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Click Game</title>
-  <script>
-    window.location.href = "login.html";
-  </script>
+  <title>Ranking</title>
+</head>
+<body onload="loadRanking()">
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<h1>Ranking Global</h1>
+<ul id="ranking"></ul>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
   const supabase = supabase.createClient(
     "https://kuzdjpwttmofwmqkgfeh.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1emRqcHd0dG1vZndtcWtnZmVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc0NTU1MjIsImV4cCI6MjA4MzAzMTUyMn0.PLwuD5NiKXbcSJ_p1LkQIMb3gP-5FpYxuwuKONXd7gA"
   );
 </script>
-</head>
-<body></body>
+<script src="script.js"></script>
+</body>
 </html>
