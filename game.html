@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="game-screen" onclick="addPoint()">
+
+  <div class="top-bar">
+    <span id="userEmail"></span>
+    <button onclick="logout()">Sair</button>
+  </div>
+
+  <div class="points">
+    <h2>Pontos</h2>
+    <h1 id="points">0</h1>
+    <p>Toque na tela para ganhar pontos</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
